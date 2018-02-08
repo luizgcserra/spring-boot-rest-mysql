@@ -14,7 +14,7 @@ To run this example follow these steps:
 7. Start MySQL service
 8. Create a database:
 ```sql
-create databse contoso;
+create database contoso;
 ```
 9. Create "customer" table in "contoso" database:
 ```sql
