@@ -2,8 +2,6 @@ package com.example.controllers;
 
 import java.net.URI;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.internal.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +21,7 @@ import java.util.List;
 
 import com.example.model.Beneficiary;
 import com.example.model.BeneficiaryKey;
+import com.example.parsers.BeneficiaryParser;
 import com.example.repository.BeneficiaryRepository;
 
 @RestController
@@ -43,15 +42,9 @@ public class BeneficiaryController {
 		if (modelList != null) {
 			List<com.example.contracts.Beneficiary> contractList = new ArrayList<com.example.contracts.Beneficiary>(
 					modelList.size());
-			ModelMapper mapper = new ModelMapper();
-			com.example.contracts.Beneficiary contract = null;
 
 			for (com.example.model.Beneficiary model : modelList) {
-				contract = mapper.map(model, com.example.contracts.Beneficiary.class);
-				contract.setNisBeneficiario(model.getKey().getNisBeneficiario());
-				contract.setMesCompetencia(model.getKey().getMesCompetencia());
-
-				contractList.add(contract);
+				contractList.add(BeneficiaryParser.Parse(model));
 			}
 
 			return ResponseEntity.ok(contractList);
@@ -65,15 +58,9 @@ public class BeneficiaryController {
 			@PathVariable(value = "competency") String competency) {
 		com.example.model.Beneficiary beneficiary = this.beneficiaryRepository
 				.findOne(new BeneficiaryKey(id, competency));
-		ModelMapper mapper = new ModelMapper();
 
 		if (beneficiary != null) {
-			com.example.contracts.Beneficiary contract = mapper.map(beneficiary,
-					com.example.contracts.Beneficiary.class);
-			contract.setNisBeneficiario(beneficiary.getKey().getNisBeneficiario());
-			contract.setMesCompetencia(beneficiary.getKey().getMesCompetencia());
-
-			return ResponseEntity.ok(contract);
+			return ResponseEntity.ok(BeneficiaryParser.Parse(beneficiary));
 		} else {
 			return ResponseEntity.noContent().build();
 		}
@@ -81,11 +68,7 @@ public class BeneficiaryController {
 
 	@PostMapping(headers = "Accept=application/json")
 	public ResponseEntity<?> add(@RequestBody com.example.contracts.Beneficiary input) {
-		ModelMapper mapper = new ModelMapper();
-		com.example.model.Beneficiary model = mapper.map(input, com.example.model.Beneficiary.class);
-		model.setKey(new BeneficiaryKey(input.getNisBeneficiario(), input.getMesCompetencia().replace("/", "")));
-
-		com.example.model.Beneficiary result = this.beneficiaryRepository.save(model);
+		com.example.model.Beneficiary result = this.beneficiaryRepository.save(BeneficiaryParser.Parse(input));
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(result.getKey().getNisBeneficiario()).toUri();
@@ -96,11 +79,7 @@ public class BeneficiaryController {
 	@PutMapping(headers = "Accept=application/json")
 	public ResponseEntity<?> modify(@RequestBody com.example.contracts.Beneficiary input) {
 		if (input != null && input.getNisBeneficiario().length() > 0) {
-			ModelMapper mapper = new ModelMapper();
-			com.example.model.Beneficiary model = mapper.map(input, com.example.model.Beneficiary.class);
-			model.setKey(new BeneficiaryKey(input.getNisBeneficiario(), input.getMesCompetencia().replace("/", "")));
-
-			this.beneficiaryRepository.save(mapper.map(model, com.example.model.Beneficiary.class));
+			this.beneficiaryRepository.save(BeneficiaryParser.Parse(input));
 
 			return ResponseEntity.ok(input);
 		} else {
@@ -135,15 +114,9 @@ public class BeneficiaryController {
 		if (modelList != null) {
 			List<com.example.contracts.Beneficiary> contractList = new ArrayList<com.example.contracts.Beneficiary>(
 					modelList.size());
-			ModelMapper mapper = new ModelMapper();
-			com.example.contracts.Beneficiary contract = null;
 
 			for (com.example.model.Beneficiary model : modelList) {
-				contract = mapper.map(model, com.example.contracts.Beneficiary.class);
-				contract.setNisBeneficiario(model.getKey().getNisBeneficiario());
-				contract.setMesCompetencia(model.getKey().getMesCompetencia());
-
-				contractList.add(contract);
+				contractList.add(BeneficiaryParser.Parse(model));
 			}
 
 			return ResponseEntity.ok(contractList);
