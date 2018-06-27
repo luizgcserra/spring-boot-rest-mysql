@@ -21,7 +21,7 @@
         <boolProp name="recycle">true</boolProp>
         <stringProp name="shareMode">shareMode.all</stringProp>
         <boolProp name="stopThread">false</boolProp>
-        <stringProp name="variableNames">uf,codigoMunicipio,nomeMuncipio,codigoFuncao,codigoSubFuncao,codigoPrograma,codigoAcao,nisBeneficiario,nomeBeneficiario,fonteFinalidade,mesReferencia,valorParcela,mesCompetencia,dataSaque</stringProp>
+        <stringProp name="variableNames">uf,codigoMunicipio,nomeMunicipio,codigoFuncao,codigoSubFuncao,codigoPrograma,codigoAcao,nisBeneficiario,nomeBeneficiario,fonteFinalidade,mesReferencia,valorParcela,mesCompetencia,dataSaque</stringProp>
       </CSVDataSet>
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
@@ -30,7 +30,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">200</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">100</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1000</stringProp>
         <stringProp name="ThreadGroup.ramp_time">10</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -56,7 +56,7 @@
    &quot;nisBeneficiario&quot;: &quot;${nisBeneficiario}&quot;,&#xd;
    &quot;uf&quot;: &quot;${uf}&quot;,&#xd;
    &quot;codigoMunicipio&quot;: &quot;${codigoMunicipio}&quot;,&#xd;
-   &quot;nomeMuncipio&quot;: &quot;${nomeMuncipio}&quot;,&#xd;
+   &quot;nomeMunicipio&quot;: &quot;${nomeMunicipio}&quot;,&#xd;
    &quot;codigoFuncao&quot;: &quot;${codigoFuncao}&quot;,&#xd;
    &quot;codigoSubFuncao&quot;: &quot;${codigoSubFuncao}&quot;,&#xd;
    &quot;codigoPrograma&quot;: &quot;${codigoPrograma}&quot;,&#xd;
@@ -125,8 +125,8 @@
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
-      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="false">
-        <boolProp name="ResultCollector.error_logging">false</boolProp>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">true</boolProp>
         <objProp>
           <name>saveConfig</name>
           <value class="SampleSaveConfiguration">

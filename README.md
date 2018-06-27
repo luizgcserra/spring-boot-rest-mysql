@@ -21,26 +21,27 @@ create database contoso;
 use contoso;
 
 CREATE TABLE beneficiary(
-   nisBeneficiario varchar(11) PRIMARY KEY,
+   nis_beneficiario varchar(14),
+   mes_competencia varchar(6),
    uf varchar(2),
-   codigoMunicipio text,
-   nomeMunicipio text,
-   codigoFuncao text,
-   codigoSubFuncao text,
-   codigoPrograma text,
-   codigoAcao text,
-   nomeBeneficiario varchar(120),
-   fonteFinalidade text,
-   mesReferencia text,
-   valorParcela double,
-   mesCompetencia text,
-   dataSaque text
+   codigo_municipio varchar(5),
+   nome_municipio varchar(60),
+   codigo_funcao varchar(5),
+   codigo_sub_funcao varchar(5),
+   codigo_programa varchar(5),
+   codigo_acao varchar(5),
+   nome_beneficiario varchar(120),
+   fonte_finalidade varchar(60),
+   mes_referencia varchar(2),
+   valor_parcela float,
+   data_saque varchar(10),
+   PRIMARY KEY (nis_beneficiario, mes_competencia)
 );
 ```
     
-10. Optionally, you can create the "email" index to search:
+10. Optionally, you can create the "nomeBeneficiario" index to search:
 ```sql
-CREATE INDEX idx_beneficiary_nomeBeneficiario ON beneficiary (nomeBeneficiario(120));
+CREATE INDEX idx_beneficiary_nome_beneficiario ON beneficiary (nome_beneficiario(120));
 ```
 11. Change environment settings in the "/spring-boot-rest-mysql/src/main/resources/application.properties" file.
 12. Run project into Eclipse IDE or command line: `mvn spring-boot:run`
